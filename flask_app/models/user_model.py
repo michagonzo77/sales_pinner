@@ -12,14 +12,13 @@ class User:
         self.first_name = data['first_name']
         self.last_name = data['last_name']
         self.email = data['email']
-        self.phone = data['phone']
         self.password = data['password']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
 
     @classmethod
     def create(cls,data):
-        query = "INSERT INTO users (first_name, last_name, email, phone, password) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(phone)s, %(password)s);"
+        query = "INSERT INTO users (first_name, last_name, email, password) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s);"
         return connectToMySQL(DATABASE).query_db(query,data)
 
 # Use to check if email exits in another user while registering and to login user.
