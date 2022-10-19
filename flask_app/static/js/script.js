@@ -53,8 +53,8 @@ function initMap() {
             <input type="text" class="form-control" name="phone" id="phone">
             <label for="pipeline_status">Status:</label>
             <select class="form-control" name="pipeline_status" id="pipeline_status">
-            <option>Prospected</option>
-            <option>Set Meeting</option>
+            <option value="1" id="prospected">Prospected</option>
+            <option value="2" id="set_meeting">Set Meeting</option>
             </select>
             <button class="btn btn-primary mt-1">Submit</button>
             </form>`});
@@ -90,7 +90,7 @@ function initMap() {
     locationButton.textContent = "Pan to Current Location";
     locationButton.classList.add("custom-map-control-button");
     map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(locationButton);
-    locationButton.addEventListener("click", () => {
+    locationButton.addEventListener("onload", () => {
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
