@@ -1,6 +1,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app import DATABASE
 from flask import flash
+from flask_app.models import business_model
 import re
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 PASSWORD_REGEX = re.compile(r'^(?=.*?[A-Z])(?=.*?[0-9])')
@@ -30,7 +31,7 @@ class User:
             return cls(results[0])
         return False
 
-# Get specific user by their ID, to attach to recipes.
+# Get specific user by their ID, to attach to businesses.
     @classmethod
     def get_by_id(cls,data):
         query = "SELECT * FROM users WHERE id = %(id)s;"
@@ -41,38 +42,38 @@ class User:
 
     @classmethod
     def add_favorite(cls,data):
-        query = "INSERT INTO favorites (user_id, recipe_id) VALUES (%(user_id)s, %(recipe_id)s);"
+        query = "INSERT INTO favorites (user_id, business_id) VALUES (%(user_id)s, %(business_id)s);"
         return connectToMySQL(DATABASE).query_db(query,data)
 
     @classmethod
     def get_one_with_favorites(cls,data):
-        query = "SELECT * FROM users LEFT JOIN favorites ON users.id = favorites.user_id LEFT JOIN recipes ON favorites.recipe_id = recipes.id WHERE users.id = %(id)s;"
+        query = "SELECT * FROM users LEFT JOIN favorites ON users.id = favorites.user_id LEFT JOIN businesses ON favorites.business_id = businesses.id WHERE users.id = %(id)s;"
         results = connectToMySQL(DATABASE).query_db(query, data)
         print(results)
         if results:
             user_instance = cls(results[0])
-            recipes_list = []
+            businesses_list = []
             for row_from_db in results:
-                recipe_data = {
-                    'id': row_from_db['recipes.id'],
+                business_data = {
+                    'id': row_from_db['businesss.id'],
                     'name': row_from_db['name'],
                     'description': row_from_db['description'],
                     'instructions': row_from_db['instructions'],
                     'date_cooked': row_from_db['date_cooked'],
                     'under_30': row_from_db['under_30'],
-                    'created_at': row_from_db['recipes.created_at'],
-                    'updated_at': row_from_db['recipes.updated_at'],
-                    'user_id': row_from_db['recipes.user_id']
+                    'created_at': row_from_db['businesss.created_at'],
+                    'updated_at': row_from_db['businesss.updated_at'],
+                    'user_id': row_from_db['businesss.user_id']
                 }
-                recipe_instance = recipe_model.Recipe(recipe_data)
+                business_instance = business_model.Business(business_data)
                 # Creates a variable that uses the User get by ID function to get that users information.
-                chef = User.get_by_id(data = {'id':recipe_data['user_id']})
-                # Adds a variable to the recipe instance with the user information, for example chef.first_name
-                recipe_instance.chef = chef
-                # Adds all recipe data plus new variable into list of recipes
-                recipes_list.append(recipe_instance)
-            # Creates a variable in user instance that includes the list of recipes they favorited 
-            user_instance.favorites = recipes_list
+                chef = User.get_by_id(data = {'id':business_data['user_id']})
+                # Adds a variable to the business instance with the user information, for example chef.first_name
+                business_instance.chef = chef
+                # Adds all business data plus new variable into list of businesss
+                businesses_list.append(business_instance)
+            # Creates a variable in user instance that includes the list of businesss they favorited 
+            user_instance.favorites = businesses_list
             return user_instance
         return results
 
