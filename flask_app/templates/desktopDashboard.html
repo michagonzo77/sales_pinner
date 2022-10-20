@@ -15,51 +15,37 @@
     </style>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script>
+        if (window.innerWidth < 767) {
+        window.location = "dashboard.html";}
+    </script>
 </head>
 
 <body>
-    <div class="mobile">
-        <div class="d-flex top_mobile justify-content-between align-items-center">
-            <div class="left_top_mobile p-1 ms-1">
-                <h1 class="text-light">Sales Pinner</h1>
-                <p class="text-light">Welcome back, {{logged_user.first_name}}</p>
-            </div>
-            <div class="right_top_mobile d-flex gap-3 p-1 me-1 align-items-center">
-                <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
+    <div class="d-flex top_mobile justify-content-between align-items-center">
+        <div class="left_top_mobile p-1 ms-1">
+            <h1 class="text-light">Sales Pinner</h1>
+            <p class="text-light">Welcome back, {{logged_user.first_name}}</p>
+        </div>
+        <div class="right_top_mobile d-flex gap-3 p-1 me-1 align-items-center">
+            <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
                     d="M28.9944 19.3021V13.5645C28.9944 8.41733 25.11 4.08133 19.8478 2.77733C19.3269 1.59653 18.054 0.764526 16.55 0.764526C15.046 0.764526 13.7731 1.59653 13.2522 2.77733C7.98999 4.08293 4.10554 8.41733 4.10554 13.5645V19.3021L1.07088 22.0333C0.905469 22.1817 0.774291 22.358 0.684895 22.5521C0.595499 22.7462 0.549651 22.9544 0.54999 23.1645V26.3645C0.54999 26.7889 0.737291 27.1958 1.07069 27.4959C1.40409 27.796 1.85627 27.9645 2.32777 27.9645H30.7722C31.2437 27.9645 31.6959 27.796 32.0293 27.4959C32.3627 27.1958 32.55 26.7889 32.55 26.3645V23.1645C32.5503 22.9544 32.5045 22.7462 32.4151 22.5521C32.3257 22.358 32.1945 22.1817 32.0291 22.0333L28.9944 19.3021ZM28.9944 24.7645H4.10554V23.8269L7.14021 21.0957C7.30562 20.9474 7.4368 20.7711 7.52619 20.5769C7.61559 20.3828 7.66144 20.1747 7.6611 19.9645V13.5645C7.6611 9.15333 11.6487 5.56453 16.55 5.56453C21.4513 5.56453 25.4389 9.15333 25.4389 13.5645V19.9645C25.4389 20.3901 25.6255 20.7965 25.9598 21.0957L28.9944 23.8269V24.7645ZM16.55 32.7645C17.651 32.7658 18.725 32.4583 19.6229 31.8848C20.5207 31.3113 21.1977 30.5003 21.5598 29.5645H11.5402C11.9023 30.5003 12.5793 31.3113 13.4771 31.8848C14.375 32.4583 15.449 32.7658 16.55 32.7645Z"
                     fill="white" />
-                </svg>
-                <div class="topnav">
+            </svg>
+            <div class="topnav">
                 <div id="myLinks">
                     <a href="/users/logout">Logout</a>
                 </div>
-                </div>
             </div>
         </div>
-        <div id="map"></div>
     </div>
+    <div id="map"></div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-C7hZbrlmGn5GwHEbXbBaPSADGmXXNXs&callback=initMap"
         async></script>
     <div class="desktop">
         <div class="top_desktop">
-            <div class="d-flex top_mobile justify-content-between align-items-center">
-                <div class="d-flex">
-                    <img src="/static/logo.png" alt="sales pinner logo" width="50" height="65">
-                    <div class="left_top_mobile p-1 ms-1">
-                        <h1 class="text-light">Sales Pinner</h1>
-                        <p class="text-light">Welcome back, {{logged_user.first_name}}</p>
-                    </div>
-                </div>
-                <div class="searchBar">
-                    <input type="text" placeholder="Search...">
-                </div>
-                <div class="d-flex gap-3 me-3">
-                    <a href="/">Dashboard</a>
-                    <a href="/">Calendar</a>
-                    <a href="/">Contacts</a>
-                </div>
-            </div>
+
         </div>
     </div>
 </body>

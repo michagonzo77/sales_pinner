@@ -8,6 +8,7 @@ flask = "*"
 pymysql = "*"
 flask-bcrypt = "*"
 python-dotenv = "*"
+flask-mysqldb = "*"
 
 [dev-packages]
 

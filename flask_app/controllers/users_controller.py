@@ -4,6 +4,7 @@ from flask_app.models.user_model import User
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
+
 @app.route('/')         
 def landing():
     if "user_id" in session:
@@ -57,30 +58,7 @@ def dash():
     logged_user = User.get_by_id(user_data)
     return render_template('dashboard.html', logged_user = logged_user)
 
-
 @app.route('/users/logout')
 def logout():
     del session['user_id']
     return redirect ('/')
-
-
-@app.route('/favorite/recipe/<int:user_id>/<int:recipe_id>')
-def favorite_recipe(user_id,recipe_id):
-    data = {
-        'user_id': user_id,
-        'recipe_id': recipe_id
-    }
-    User.add_favorite(data)
-    return redirect('/dashboard')
-
-@app.route('/favorites/<int:id>')
-def get_one(id):
-    if not "user_id" in session:
-        return redirect('/')
-    data = { 'id': id }
-    user_data = {
-        'id' : session['user_id'],
-    }
-    logged_user = User.get_by_id(user_data)
-    user = User.get_one_with_favorites(data)
-    return render_template("favorites.html", user = user, logged_user = logged_user)

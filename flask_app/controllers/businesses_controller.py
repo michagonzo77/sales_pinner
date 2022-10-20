@@ -1,5 +1,5 @@
 from flask_app import app
-from flask import render_template, redirect, session, request, flash
+from flask import render_template, redirect, session, request, flash, jsonify
 from flask_app.models.user_model import User
 from flask_app.models.business_model import Business
 
@@ -17,3 +17,12 @@ def create_business():
     }
     Business.create(data)
     return redirect('/dashboard')
+
+@app.route('/get_businesses')
+def get_businesses():
+    print('hello')
+    data = {
+        'user_id': session['user_id']
+    }
+    # jsonify will serialize data into JSON format.
+    return jsonify(Business.get_all_json(data))

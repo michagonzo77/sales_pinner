@@ -40,43 +40,6 @@ class User:
             return cls(results[0])
         return False
 
-    @classmethod
-    def add_favorite(cls,data):
-        query = "INSERT INTO favorites (user_id, business_id) VALUES (%(user_id)s, %(business_id)s);"
-        return connectToMySQL(DATABASE).query_db(query,data)
-
-    @classmethod
-    def get_one_with_favorites(cls,data):
-        query = "SELECT * FROM users LEFT JOIN favorites ON users.id = favorites.user_id LEFT JOIN businesses ON favorites.business_id = businesses.id WHERE users.id = %(id)s;"
-        results = connectToMySQL(DATABASE).query_db(query, data)
-        print(results)
-        if results:
-            user_instance = cls(results[0])
-            businesses_list = []
-            for row_from_db in results:
-                business_data = {
-                    'id': row_from_db['businesss.id'],
-                    'name': row_from_db['name'],
-                    'description': row_from_db['description'],
-                    'instructions': row_from_db['instructions'],
-                    'date_cooked': row_from_db['date_cooked'],
-                    'under_30': row_from_db['under_30'],
-                    'created_at': row_from_db['businesss.created_at'],
-                    'updated_at': row_from_db['businesss.updated_at'],
-                    'user_id': row_from_db['businesss.user_id']
-                }
-                business_instance = business_model.Business(business_data)
-                # Creates a variable that uses the User get by ID function to get that users information.
-                chef = User.get_by_id(data = {'id':business_data['user_id']})
-                # Adds a variable to the business instance with the user information, for example chef.first_name
-                business_instance.chef = chef
-                # Adds all business data plus new variable into list of businesss
-                businesses_list.append(business_instance)
-            # Creates a variable in user instance that includes the list of businesss they favorited 
-            user_instance.favorites = businesses_list
-            return user_instance
-        return results
-
 # Validate user creating account.
     @staticmethod
     def validator(potential_user):
