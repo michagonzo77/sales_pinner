@@ -38,7 +38,7 @@ def edit_car(id):
         'id' : session['user_id']
     }
     logged_user = User.get_by_id(user_data)
-    return render_template("car_edit.html", this_car = this_business, logged_user = logged_user)
+    return render_template("business_edit.html", this_business = this_business, logged_user = logged_user)
 
 
 @app.route('/businesses/<int:id>/update', methods=['POST'])

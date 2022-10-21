@@ -59,6 +59,16 @@ class Business:
             all_businesses.append(this_business)
         return all_businesses
 
+    @classmethod
+    def get_by_id_working(cls,data):
+        query = "SELECT * FROM businesses WHERE businesses.id = %(id)s;"
+        results = connectToMySQL(DATABASE).query_db(query,data)
+        if len(results) < 1:
+            return False
+        row = results[0]
+        this_business = cls(row)
+        return this_business
+
     @staticmethod
     def validator(form_data):
         is_valid = True

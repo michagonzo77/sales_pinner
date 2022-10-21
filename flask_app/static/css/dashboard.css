@@ -116,3 +116,7 @@ html,body {
 .phonetable {
     font-size: .8rem;
 }
+
+.sidemenulinks {
+    text-decoration: none;
+}
