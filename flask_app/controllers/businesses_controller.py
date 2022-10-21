@@ -25,3 +25,29 @@ def get_businesses():
     }
     # jsonify will serialize data into JSON format.
     return jsonify(Business.get_all_json(data))
+
+@app.route('/businesses/<int:id>/edit')
+def edit_car(id):
+    if 'user_id' not in session:
+        return redirect('/')
+    this_business = Business.get_by_id_working({'id':id})
+    if not this_business.user_id == session['user_id']:
+        flash("This aint your prospect!")
+        return redirect('/dashboard')
+    user_data = {
+        'id' : session['user_id']
+    }
+    logged_user = User.get_by_id(user_data)
+    return render_template("car_edit.html", this_car = this_business, logged_user = logged_user)
+
+
+@app.route('/businesses/<int:id>/update', methods=['POST'])
+def update_car(id):
+    if not Car.validator(request.form):
+        return redirect(f'/cars/{id}/edit')
+    car_data = {
+        **request.form,
+        'id':id
+    }
+    Car.update(car_data)
+    return redirect('/dashboard')

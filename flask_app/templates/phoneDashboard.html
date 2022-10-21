@@ -38,6 +38,7 @@
         </div>
     </div>
     <div class="bottomphonetable">
+        <h1>Prospects</h1>
         <table class="phonetable bigtableohmy table table-striped">
             <thead class="bg-light text-primary">
                 <tr class="text-center">
@@ -60,7 +61,7 @@
                     {% if business.pipeline_status == 2%}
                     <td>Set Meeting</td>
                     {% endif %}
-                    <td><a class="edit_business_phone btn btn-primary" href="">Edit Business</a></td>
+                    <td><a class="edit_business_phone btn btn-primary" href="/businesses/{{business.id}}/edit">Edit Business</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
