@@ -20,7 +20,6 @@ def create_business():
 
 @app.route('/get_businesses')
 def get_businesses():
-    print('hello')
     data = {
         'user_id': session['user_id']
     }

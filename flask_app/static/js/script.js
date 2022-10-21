@@ -1,15 +1,19 @@
-function myFunction() {
-    var x = document.getElementById("myLinks");
-    if (x.style.display === "block") {
-        x.style.display = "none";
-    } else {
-        x.style.display = "block";
-    }
-}
-
-
 let map, infoWindow, options, marker;
 var all_markers = [];
+
+var curday = function(sp){
+    today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //As January is 0.
+    var yyyy = today.getFullYear();
+    
+    if(dd<10) dd='0'+dd;
+    if(mm<10) mm='0'+mm;
+    return (mm+sp+dd+sp+yyyy);
+    };
+    console.log(curday('/'));
+
+
 
 
 function initMap() {
@@ -50,7 +54,7 @@ function initMap() {
         marker = new google.maps.Marker({
             position: props.coords,
             map: map,
-            animation: google.maps.Animation.DROP
+            animation: google.maps.Animation.DROP,
         })
     }
 
@@ -120,6 +124,7 @@ function initMap() {
         fetch('/get_businesses')
             .then(res =>  res.json())
             .then(data => {
+                console.log(data)
                 for( let i = 0; i < data.length; i++){
                     lat = data[i].lat
                     lng = data[i].lng

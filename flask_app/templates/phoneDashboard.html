@@ -15,10 +15,6 @@
     </style>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script>
-        if (window.innerWidth < 767) {
-        window.location = "dashboard.html";}
-    </script>
 </head>
 
 <body>
@@ -34,19 +30,43 @@
                     fill="white" />
             </svg>
             <div class="topnav">
-                <div id="myLinks">
+                <div id="myLinks" class="d-flex gap-3">
+                    <a href="/dashboard">Map</a>
                     <a href="/users/logout">Logout</a>
                 </div>
             </div>
         </div>
     </div>
-    <div id="map"></div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-C7hZbrlmGn5GwHEbXbBaPSADGmXXNXs&callback=initMap"
-        async></script>
-    <div class="desktop">
-        <div class="top_desktop">
-
-        </div>
+    <div class="bottomphonetable">
+        <table class="phonetable bigtableohmy table table-striped">
+            <thead class="bg-light text-primary">
+                <tr class="text-center">
+                    <th>Business Name</th>
+                    <th>Owner Name</th>
+                    <th>Owner Email</th>
+                    <th>Owner Phone</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            {% for business in all_businesses %}
+            <tbody>
+                <tr>
+                    <td>{{business.business_name}}</td>
+                    <td>{{business.first_name}} {{business.last_name}}</td>
+                    <td>{{business.email}}</td>
+                    <td>{{business.phone}}</td>
+                    {% if business.pipeline_status == 1%}
+                    <td>Prospected</td>
+                    {% endif %}
+                    {% if business.pipeline_status == 2%}
+                    <td>Set Meeting</td>
+                    {% endif %}
+                    <td><a class="edit_business_phone btn btn-primary" href="">Edit Business</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </body>
 </html>

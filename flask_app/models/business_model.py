@@ -19,6 +19,8 @@ class Business:
         self.lat = data['lat']
         self.lng = data['lng']
         self.user_id = data['user_id']
+        self.created_at = data['created_at']
+        self.updated_at = data['updated_at']
 
 
     @classmethod
@@ -41,6 +43,21 @@ class Business:
         query = "SELECT lat, lng FROM businesses WHERE user_id = %(user_id)s;"
         results = connectToMySQL(DATABASE).query_db(query,data)
         return results
+
+    @classmethod
+    def get_all(cls,data):
+        query = "SELECT * FROM businesses WHERE user_id = %(user_id)s;"
+        results = connectToMySQL(DATABASE).query_db(query,data)
+        print(results)
+        all_businesses = []
+        for row in results:
+            business_data = {
+                    **row
+                    }
+            this_business = cls(row)
+            this_business = Business(business_data)
+            all_businesses.append(this_business)
+        return all_businesses
 
     @staticmethod
     def validator(form_data):
